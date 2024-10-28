@@ -5,12 +5,13 @@ function sanitizeInput($input) {
     return htmlspecialchars(strip_tags(trim($input)));
 }
 
-function agregarProducto($nombre, $descripcion, $cantidad) {
+function agregarProducto($nombre, $descripcion, $cantidad, $precio) {
     global $productosCollection;
     $resultado = $productosCollection->insertOne([
         'nombre' => sanitizeInput($nombre),
         'descripcion' => sanitizeInput($descripcion),
-        'cantidad' => (int)$cantidad
+        'cantidad' => (int)$cantidad,
+        'precio' => (float)$precio
     ]);
     return $resultado->getInsertedId();
 }
@@ -28,14 +29,15 @@ function obtenerProductoPorId($id) {
     return $productosCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
 }
 
-function actualizarProducto($id, $nombre, $descripcion, $cantidad) {
+function actualizarProducto($id, $nombre, $descripcion, $cantidad, $precio) {
     global $productosCollection;
     $resultado = $productosCollection->updateOne(
         ['_id' => new MongoDB\BSON\ObjectId($id)],
         ['$set' => [
             'nombre' => sanitizeInput($nombre),
             'descripcion' => sanitizeInput($descripcion),
-            'cantidad' => (int)$cantidad
+            'cantidad' => (int)$cantidad,
+            'precio' => (float)$precio
         ]]
     );
     return $resultado->getModifiedCount();
@@ -51,7 +53,9 @@ function obtenerProductosMasVendidos() {
     global $productosCollection;
     return $productosCollection->find([], [
         'sort' => ['ventas' => -1],
-        'limit' => 10000
+        'limit' => 10000,
+        'precio'  => 1
+
     ]);
 }
 

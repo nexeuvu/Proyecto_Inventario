@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../inventario/includes/functions.php';
+
+require_once __DIR__ . '/../inventario2/includes/functions.php';
 
 
 $mongoClient = new MongoDB\Client("mongodb+srv://nexeu:v6tQsSab1hne0a8w@cursosbd.m90ik.mongodb.net/?retryWrites=true&w=majority&appName=CursosBD");
@@ -25,12 +26,15 @@ $productosMasVendidos = obtenerProductosMasVendidos();
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Cantidad Vendida</th>
+                <th>Precio Unitario</th>
             </tr>
             <?php foreach ($productosMasVendidos as $producto): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
                     <td><?php echo htmlspecialchars($producto['descripcion']); ?></td>
                     <td><?php echo isset($producto['cantidad']) ? $producto['cantidad'] : 0; ?></td>
+                    <td><?php echo isset($producto['precio']) ? "S/. " . $producto['precio'] : 0; ?></td>
+
                 </tr>
             <?php endforeach; ?>
         </table>

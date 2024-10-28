@@ -14,7 +14,7 @@ if (!$producto) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $count = actualizarProducto($_GET['id'], $_POST['nombre'], $_POST['descripcion'], $_POST['cantidad']);
+    $count = actualizarProducto($_GET['id'], $_POST['nombre'], $_POST['descripcion'], $_POST['cantidad'], $_POST['precio']);
     if ($count > 0) {
         header("Location: index.php?mensaje=Producto actualizado con éxito");
         exit;
@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Nombre: <input type="text" name="nombre" value="<?php echo htmlspecialchars($producto['nombre']); ?>" required></label>
             <label>Descripción: <textarea name="descripcion" required><?php echo htmlspecialchars($producto['descripcion']); ?></textarea></label>
             <label>Cantidad: <input type="number" name="cantidad" value="<?php echo $producto['cantidad']; ?>" required></label>
+            <label>Precio: <input type="number" step="0.01" name="precio" value="<?php echo number_format($producto['precio'], 2); ?>" required></label>
             <input type="submit" value="Actualizar Producto">
         </form>
         <a href="index.php" class="button">Volver a la lista de productos</a>

@@ -7,5 +7,4 @@ $mongoClient = new MongoDB\Client("mongodb+srv://nexeu:v6tQsSab1hne0a8w@cursosbd
 $database = $mongoClient->selectDatabase('inventario');
 
 $productosCollection = $database->selectCollection('productos');
-
 ?>
